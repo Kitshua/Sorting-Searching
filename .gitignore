@@ -1,28 +1,157 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+using namespace std;
 
-# Precompiled Headers
-*.gch
-*.pch
+/*
+Program: Assignment 4
+Date: 11/20/14
+Programmer: Jaclyn Woodlief
+Purpose: This assignment is designed to demonstrate an understanding of decision structures
+*/
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
 
-# Fortran module files
-*.mod
+//Prototype
+void patternMatching();
+void sorting();
+void bubbleSort(int nums[]);
+void selectionSort(int nums[]);
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+int main()
+{
+    cout << "Program: Assignment 4" << endl << "Date: 11/20/14" << endl << "Programmer: Jaclyn Woodlief" << endl <<"Purpose: This assignment is designed to demonstrate an understanding of decision structures" << endl << endl;
 
-# Executables
-*.exe
-*.out
-*.app
+    //variable
+    char option;
+    //ask for user input
+    cout << "Pattern matching (p) or sorting (s): " << endl;
+    cin >> option;
+    //checks option is valid
+    while (option != 'p' && option != 's')
+    {
+        cout << "Invalid input" << endl << "Pattern matching (p) or sorting (s): " << endl;
+        cin >> option;
+    }
+    //calls function based on option
+    if (option == 'p')
+        patternMatching();
+    else if (option == 's')
+        sorting();
+
+    return 0;
+}
+
+void patternMatching()
+{
+    //variables
+    string text, need;
+    //allows for using ignore()
+    cin.ignore();
+
+    //asks for text to search in
+    cout << "Text:" << endl;
+    getline(cin, text);
+
+    //DEBUG
+    //cout << "ENTERED: " << text << endl;
+
+    //asks for text to search for
+    cout << "Find:" << endl;
+    getline(cin,need);
+
+    //counter for occurrences
+    int count = 0;
+    //checks for desired word and prints location
+    cout << "Found at:";
+    for (int i = text.find(need); i != std::string::npos;
+	 i = text.find(need, i + need.length()))
+    {
+        cout << i << " ";
+        count++;
+    }
+    //prints occurrences
+    cout << endl << "Occurs: " << count << endl;
+}
+
+
+
+void sorting()
+{
+    srand (time(0));
+    //variables
+    char option;
+    int nums[10];
+    //prints out numbers
+    cout << "Numbers: " << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        nums[i] = rand() % 100 + 1;
+        cout << nums[i] << " ";
+    }
+    //asks for user input
+    cout << "\nBubble sort(b) or Selection sort(s): " << endl;
+    cin >> option;
+    //checks for valid input
+    while (option != 'b' && option != 's')
+    {
+        cout << "Invalid input" << endl << "Bubble sort(b) or Selection sort(s): " << endl;
+        cin >> option;
+    }
+    //calls function based on users option
+    if (option == 'b')
+        bubbleSort(nums);
+    else if (option == 's')
+        selectionSort(nums);
+}
+
+void bubbleSort(int nums[])
+{
+    bool change;
+    int temp;
+    //sorts numbers
+    do
+    {
+        change = false;
+        for (int i = 0; i < 10; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                temp = nums[i];
+                nums[i] = nums[i + 1];
+                nums[i + 1] = temp;
+                change = true;
+            }
+        }
+    } while (change);
+
+    cout << "Sorted: " << endl;
+    for (int i = 0; i < 10; i++)
+    {
+       cout << nums[i] << " ";
+    }
+}
+
+void selectionSort(int nums[])
+{
+    //variables
+    int num, low;
+    //sorts numbers
+    for (int i = 0; i < 10; i++)
+    {
+        num = i;
+        low = nums[i];
+        for(int index = i + 1; index < 10; index++)
+        {
+            if (nums[index] < low)
+            {
+                low = nums[index];
+                num = index;
+            }
+        }
+        nums[num] = nums[i];
+        nums[i] = low;
+    }
+    //prints sorted numbers
+    cout << "Sorted: " << endl;
+    for (int i = 0; i < 10; i++)
+    {
+       cout << nums[i] << " ";
+    }
+}
